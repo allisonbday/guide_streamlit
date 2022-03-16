@@ -6,9 +6,11 @@ iris = datasets.load_iris()
 
 # %%
 X = pd.DataFrame(iris.data)
-y = pd.Series(iris.target)
+y = pd.DataFrame(iris.target)
 
 X.columns = iris.feature_names
+y.columns = ['Type']
+y.replace([0,1,2], iris.target_names, inplace=True)
 
 df = pd.concat([X,y],axis=1)
 # %%
