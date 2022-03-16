@@ -13,5 +13,5 @@ y.columns = ['Type']
 y.replace([0,1,2], iris.target_names, inplace=True)
 
 df = pd.concat([X,y],axis=1)
-df.to_csv('iris.csv')
+# df.to_csv('iris.csv')
 # %%
