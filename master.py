@@ -195,7 +195,7 @@ with model_import:
     disp_col.success("The output is {}".format(result))
 
 
-df = pd.read_csv('/Users/blakekrupa/Desktop/School/Python/guide_streamlit/data/iris.csv')
+df = pd.read_csv('data/iris.csv')
 
 st.title('CheatSheet')
 
