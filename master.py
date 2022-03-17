@@ -3,6 +3,12 @@ import pandas as pd
 import numpy as np
 import pickle
 
+# Graphing packages
+import altair as alt
+import matplotlib
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 # stuff for machine
 from sklearn import datasets
 from sklearn.ensemble import RandomForestClassifier
@@ -91,7 +97,31 @@ with dataset:
 
 # exploration
 with exploration:
-    st.write("*SOMETHING HERE*")
+    if st.checkbox('Show Something'):
+        st.write("*SOMETHING HERE*")
+    st.write("Built in charts")
+    st.line_chart(data)
+    st.write("The built in charts are not very customizable. They infer based off of what the dataframe contains.")
+
+    chart = (alt.Chart(data)
+    .encode(
+        alt.X('petal length', axis=alt.Axis(title='Petal Length')), 
+        alt.Y('petal width', axis=alt.Axis(title='Petal Width')), 
+        color = alt.Color('species', title='Species'))
+    .mark_circle()
+    .configure_axis(labelFontSize=18, titleFontSize=18)
+    .configure_title(fontSize=20)
+    .configure_legend(titleFontSize=18, labelFontSize=18))
+    st.write("Vega Charts (includes Altair)")
+    st.altair_chart(chart)
+    st.write("We are given a lot more control when we use other graphing libraries")
+
+    fig = plt.figure(figsize=(10, 4))
+    sns.lineplot(x = "sepal length", y = "sepal width", hue = "species", data = data)
+    st.write("Matplotlib (includes seaborn)")
+    st.pyplot(fig)
+
+    st.write("There are many more packages you can use, including: deck.gl, plotly, bokeh, pydeck, and graphviz")
 
 
 # model_making
