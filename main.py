@@ -3,6 +3,12 @@ import pandas as pd
 import numpy as np
 import pickle
 
+# Graphing packages
+import altair as alt
+import matplotlib
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 # stuff for machine
 from sklearn import datasets
 from sklearn.ensemble import RandomForestClassifier
