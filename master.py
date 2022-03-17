@@ -1,22 +1,85 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
+import pickle
 
+# stuff for machine
+from sklearn import datasets
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.datasets import load_iris
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+
+# --- SETUP --- #
+
+## Containers
 header = st.container()
 dataset = st.container()
-features = st.container()
-model_training = st.container()
+exploration = st.container()
+model_making = st.container()
+model_import = st.container()
 
+## Functions(*skip*)
+@st.cache
+def get_data():  # load in the data
+    # the data
+    iris = datasets.load_iris()
+    data = pd.DataFrame(
+        {
+            "sepal length": iris.data[:, 0],
+            "sepal width": iris.data[:, 1],
+            "petal length": iris.data[:, 2],
+            "petal width": iris.data[:, 3],
+            "species": iris.target,
+        }
+    )
+    return data
+
+
+@st.cache
+def pickel_load():  # load in saved model
+    pickle_in = open("model/classifier.pkl", "rb")
+    classifier = pickle.load(pickle_in)
+    return classifier
+
+
+def prediction(sepal_length, sepal_width, petal_length, petal_width):
+    classifier2 = pickel_load()
+    prediction = classifier2.predict(
+        [[sepal_length, sepal_width, petal_length, petal_width]]
+    )
+    print(prediction)
+    return prediction
+
+
+## Customize(*skip*)
+# palette: https://coolors.co/palette/f4f1de-e07a5f-3d405b-81b29a-f2cc8f
+st.markdown(
+    """
+<style>
+.main {
+    background-color: #81B29A;
+}
+</style>
+    """,
+    unsafe_allow_html=True,
+)
+
+
+# --- BODY ---
+# header
 with header:
-    st.title("Wizards - Taxi Machine")
+    st.title("Streamlit & Machine Learning")
     st.write(
         """
         *Following this [tutorial](https://www.youtube.com/watch?v=-IM3531b1XU&list=PLM8lYG2MzHmRpyrk9_j9FW0HiMwD9jSl5)*
         """
     )
 
-
+# dataset
 with dataset:
-    st.header("US Zipcodes Dataset")
+    st.header("Iris Dataset")
+    data = get_data()
     st.text("")
 
     zip_data = pd.read_csv("data/uszips.csv")
@@ -27,22 +90,17 @@ with dataset:
     density_mean = pd.DataFrame(zip_data.groupby("state_name")["density"].mean())
     st.bar_chart(density_mean)
 
-with features:
-    st.header("The features I created")
-
-    st.markdown(
-        """
-        * ** first feature** I created this feature because of this... I calculated it using this logic....
-        * ** second feature** I created this feature because of this... I calculated it using this logic....
-        """
-    )
+# exploration
+with exploration:
+    st.write("*SOMETHING HERE*")
 
 
-with model_training:
-    st.header("Time to train the model!")
-
+# model_making
+with model_making:
+    st.header("Model - Make & Tune")
     sel_col, disp_col = st.columns(2)
 
+    ### inputs
     max_depth = sel_col.slider(
         "What should be the max_depth of the model?",
         min_value=10,
@@ -50,9 +108,42 @@ with model_training:
         value=50,
         step=10,
     )
-
     n_estimators = sel_col.selectbox(
-        "How many trees should there be?", options=[100, 200, 300, "No Limit"], index=1
+        "How many trees should there be?", options=[100, 200, 300], index=1
     )
 
-    input_feature = sel_col.text_input("Which feature should we use?", "PU")
+    ### machine
+    X = data.iloc[:, :-1]
+    y = data.iloc[:, -1]  # Labels
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+    classifier1 = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth)
+    classifier1.fit(X_train, y_train)
+    y_pred = classifier1.predict(X_test)
+
+    ### display
+    disp_col.subheader("Mean Absolute Error of the model is: ")
+    disp_col.write(mean_absolute_error(y_test, y_pred))
+
+    disp_col.subheader("Mean Squared Error of the model is: ")
+    disp_col.write(mean_squared_error(y_test, y_pred))
+
+    disp_col.subheader("R Squared Score of the model is: ")
+    disp_col.write(r2_score(y_test, y_pred))
+
+
+# model_import
+with model_import:
+    st.header("Model - Import & Predict")
+    sel_col, disp_col = st.columns(2)
+
+    ### inputs
+    sepal_length = sel_col.text_input("Sepal Length", "Type Here")
+    sepal_width = sel_col.text_input("Sepal Width", "Type Here")
+    petal_length = sel_col.text_input("Petal Length", "Type Here")
+    petal_width = sel_col.text_input("Petal Width", "Type Here")
+    result = ""
+
+    ### predictions
+    if st.button("Predict"):
+        result = prediction(sepal_length, sepal_width, petal_length, petal_width)
+    st.success("The output is {}".format(result))
