@@ -17,7 +17,7 @@ with st.sidebar:
 
 
 
-df = pd.read_csv('/Users/blakekrupa/Desktop/School/Python/guide_streamlit/data/iris.csv')
+df = pd.read_csv('data/iris.csv')
 
 st.title('Display Information')
 
