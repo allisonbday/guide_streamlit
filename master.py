@@ -257,8 +257,8 @@ st.write(sepal)
 st.header('Why choose dataframe/table over Write?')
 
 
-st.markdown('1. datarame/table allows for the data to be added or replaced')
-st.markdown('2. datarame/table have various arguements that can be used to customize table')
+st.markdown('1. dataframe/table allows for the data to be added or replaced')
+st.markdown('2. dataframe/table have various arguments that can be used to customize table')
 
 
 if "df" not in st.session_state:
