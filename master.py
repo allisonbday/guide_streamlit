@@ -36,7 +36,7 @@ def get_data():  # load in the data
     return data
 
 
-@st.cache
+# @st.cache
 def pickel_load():  # load in saved model
     pickle_in = open("model/classifier.pkl", "rb")
     classifier = pickle.load(pickle_in)
@@ -44,7 +44,6 @@ def pickel_load():  # load in saved model
 
 
 def prediction(sepal_length, sepal_width, petal_length, petal_width):
-    classifier2 = pickel_load()
     prediction = classifier2.predict(
         [[sepal_length, sepal_width, petal_length, petal_width]]
     )
@@ -112,11 +111,19 @@ with model_making:
         "How many trees should there be?", options=[100, 200, 300], index=1
     )
 
+    min_samples_split = sel_col.radio(
+        "What should be the min_samples_split? ", (2, 3, 4, 5)
+    )
+
     ### machine
     X = data.iloc[:, :-1]
     y = data.iloc[:, -1]  # Labels
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
-    classifier1 = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth)
+    classifier1 = RandomForestClassifier(
+        n_estimators=n_estimators,
+        max_depth=max_depth,
+        min_samples_split=min_samples_split,
+    )
     classifier1.fit(X_train, y_train)
     y_pred = classifier1.predict(X_test)
 
@@ -137,13 +144,22 @@ with model_import:
     sel_col, disp_col = st.columns(2)
 
     ### inputs
-    sepal_length = sel_col.text_input("Sepal Length", "Type Here")
-    sepal_width = sel_col.text_input("Sepal Width", "Type Here")
-    petal_length = sel_col.text_input("Petal Length", "Type Here")
-    petal_width = sel_col.text_input("Petal Width", "Type Here")
+    sepal_length = sel_col.number_input(
+        "Sepal Length", value=(data["sepal length"].mean())
+    )
+    sepal_width = sel_col.number_input(
+        "Sepal Width", value=(data["sepal width"].mean())
+    )
+    petal_length = sel_col.number_input(
+        "Petal Length", value=(data["petal length"].mean())
+    )
+    petal_width = sel_col.number_input(
+        "Petal Width", value=(data["petal width"].mean())
+    )
     result = ""
 
     ### predictions
-    if st.button("Predict"):
+    classifier2 = pickel_load()
+    if disp_col.button("Predict"):
         result = prediction(sepal_length, sepal_width, petal_length, petal_width)
-    st.success("The output is {}".format(result))
+    disp_col.success("The output is {}".format(result))

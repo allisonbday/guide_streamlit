@@ -7,9 +7,7 @@
 # 4. Models 
 
 ## a) model_making
-
 ### model
-
 ```python
     X = data.iloc[:, :-1]
     y = data.iloc[:, -1]  # Labels
@@ -20,13 +18,14 @@
 ```
 
 ## b) model_import
+### load in pickel
 ```python
 def pickel_load():  # load in saved model
     pickle_in = open("model/classifier.pkl", "rb")
     classifier = pickle.load(pickle_in)
     return classifier
 ```
-
+### get predictions
 ```python
 def prediction(sepal_length, sepal_width, petal_length, petal_width):
     classifier2 = pickel_load()
@@ -39,7 +38,6 @@ def prediction(sepal_length, sepal_width, petal_length, petal_width):
 
 
 # 5. Wrap it up
-
 ### cache & functions
 ```python
 def get_data():  # load in the data
