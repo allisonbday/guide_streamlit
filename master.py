@@ -203,8 +203,20 @@ with dataset:
 
                 if st.session_state.df.shape[0] == num_new_rows:
                     st.error("Add row limit reached...")
+    button = st.button('Delete Table')
+
 
     st.dataframe(st.session_state.df)
+
+    st.code('element = st.dataframe(st.session_state.df) \nelement.add_rows(st.session_state.df)')
+
+    element = st.dataframe(st.session_state.df)
+    element.add_rows(st.session_state.df)
+   
+
+    if button:
+       for key in st.session_state.keys():
+           del st.session_state[key]
 
     st.header('Session State')
 
