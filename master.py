@@ -1,6 +1,6 @@
 import os
 
-os.
+
 
 
 #!pip install -r requirements.txt
@@ -91,118 +91,7 @@ with header:
 
 # dataset
 with dataset:
-    st.write("BLAKE PUT YOUR STUFF UP HERE!!!!!!!!!!!!!!!!!!!!!!!!!!")
-
-# exploration
-with exploration:
-
-    data = get_data()
-
-    if st.checkbox("Show Something"):
-        st.write("*SOMETHING HERE*")
-    st.write("Built in charts")
-    st.line_chart(data)
-    st.write(
-        "The built in charts are not very customizable. They infer based off of what the dataframe contains."
-    )
-
-    chart = (
-        alt.Chart(data)
-        .encode(
-            alt.X("petal length", axis=alt.Axis(title="Petal Length")),
-            alt.Y("petal width", axis=alt.Axis(title="Petal Width")),
-            color=alt.Color("species", title="Species"),
-        )
-        .mark_circle()
-        .configure_axis(labelFontSize=18, titleFontSize=18)
-        .configure_title(fontSize=20)
-        .configure_legend(titleFontSize=18, labelFontSize=18)
-    )
-    st.write("Vega Charts (includes Altair)")
-    st.altair_chart(chart)
-    st.write("We are given a lot more control when we use other graphing libraries")
-
-    fig = plt.figure(figsize=(10, 4))
-    sns.lineplot(x="sepal length", y="sepal width", hue="species", data=data)
-    st.write("Matplotlib (includes seaborn)")
-    st.pyplot(fig)
-
-    st.write(
-        "There are many more packages you can use, including: deck.gl, plotly, bokeh, pydeck, and graphviz"
-    )
-
-
-# model_making
-with model_making:
-    st.header("Model - Make & Tune")
-    sel_col, disp_col = st.columns(2)
-
-    ### inputs
-    max_depth = sel_col.slider(
-        "What should be the max_depth of the model?",
-        min_value=10,
-        max_value=100,
-        value=50,
-        step=10,
-    )
-    n_estimators = sel_col.selectbox(
-        "How many trees should there be?", options=[100, 200, 300], index=1
-    )
-
-    min_samples_split = sel_col.radio(
-        "What should be the min_samples_split? ", (2, 3, 4, 5)
-    )
-
-    ### machine
-    X = data.iloc[:, :-1]
-    y = data.iloc[:, -1]  # Labels
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
-    classifier1 = RandomForestClassifier(
-        n_estimators=n_estimators,
-        max_depth=max_depth,
-        min_samples_split=min_samples_split,
-    )
-    classifier1.fit(X_train, y_train)
-    y_pred = classifier1.predict(X_test)
-
-    ### display
-    disp_col.subheader("Mean Absolute Error of the model is: ")
-    disp_col.write(mean_absolute_error(y_test, y_pred))
-
-    disp_col.subheader("Mean Squared Error of the model is: ")
-    disp_col.write(mean_squared_error(y_test, y_pred))
-
-    disp_col.subheader("R Squared Score of the model is: ")
-    disp_col.write(r2_score(y_test, y_pred))
-
-
-# model_import
-with model_import:
-    st.header("Model - Import & Predict")
-    sel_col, disp_col = st.columns(2)
-
-    ### inputs
-    sepal_length = sel_col.number_input(
-        "Sepal Length", value=(data["sepal length"].mean())
-    )
-    sepal_width = sel_col.number_input(
-        "Sepal Width", value=(data["sepal width"].mean())
-    )
-    petal_length = sel_col.number_input(
-        "Petal Length", value=(data["petal length"].mean())
-    )
-    petal_width = sel_col.number_input(
-        "Petal Width", value=(data["petal width"].mean())
-    )
-    result = ""
-
-    ### predictions
-    classifier2 = pickel_load()
-    if disp_col.button("Predict"):
-        result = prediction(sepal_length, sepal_width, petal_length, petal_width)
-    disp_col.success("The output is {}".format(result))
-
-
+    
 df = pd.read_csv("data/iris.csv")
 
 st.title("CheatSheet")
@@ -318,7 +207,150 @@ with st.form(key="add form", clear_on_submit=True):
 
 st.dataframe(st.session_state.df)
 
+st.header('Session State')
+
+"""
+- Session current app, when a new app is open it is a new session
+- State is what is used to store the current values on the back end
+- Session State allows you to store values from previous sessions
+
+allows the state to link to past  sessions
+
+Think of Run state as a python dictionary that operates in a key value pair.
+
+"""
+st.subheader('accessing keys')
+st.code('for the_key in st.session_state.keys(): \n st.write(the_key)')
+for the_key in st.session_state.keys():
+    st.write(the_key)
+
+st.subheader('accessing values')
+st.code('for the_value in st.session_state.values(): \n st.write(the_value)')
+for the_value in st.session_state.values():
+    st.write(the_value)
+
+st.subheader('accessing pairs')
+st.code('for the_item in st.session_state.items(): \n st.write(the_item)')
+for the_item in st.session_state.items():
+    st.write(the_item)
+
+
+
+
+
+
 
 st.markdown(
     "[Cheatsheet](https://docs.streamlit.io/library/cheatsheet)", unsafe_allow_html=True
 )
+
+
+# exploration
+with exploration:
+
+    data = get_data()
+
+    if st.checkbox("Show Something"):
+        st.write("*SOMETHING HERE*")
+    st.write("Built in charts")
+    st.line_chart(data)
+    st.write(
+        "The built in charts are not very customizable. They infer based off of what the dataframe contains."
+    )
+
+    chart = (
+        alt.Chart(data)
+        .encode(
+            alt.X("petal length", axis=alt.Axis(title="Petal Length")),
+            alt.Y("petal width", axis=alt.Axis(title="Petal Width")),
+            color=alt.Color("species", title="Species"),
+        )
+        .mark_circle()
+        .configure_axis(labelFontSize=18, titleFontSize=18)
+        .configure_title(fontSize=20)
+        .configure_legend(titleFontSize=18, labelFontSize=18)
+    )
+    st.write("Vega Charts (includes Altair)")
+    st.altair_chart(chart)
+    st.write("We are given a lot more control when we use other graphing libraries")
+
+    fig = plt.figure(figsize=(10, 4))
+    sns.lineplot(x="sepal length", y="sepal width", hue="species", data=data)
+    st.write("Matplotlib (includes seaborn)")
+    st.pyplot(fig)
+
+    st.write(
+        "There are many more packages you can use, including: deck.gl, plotly, bokeh, pydeck, and graphviz"
+    )
+
+
+# model_making
+with model_making:
+    st.header("Model - Make & Tune")
+    sel_col, disp_col = st.columns(2)
+
+    ### inputs
+    max_depth = sel_col.slider(
+        "What should be the max_depth of the model?",
+        min_value=10,
+        max_value=100,
+        value=50,
+        step=10,
+    )
+    n_estimators = sel_col.selectbox(
+        "How many trees should there be?", options=[100, 200, 300], index=1
+    )
+
+    min_samples_split = sel_col.radio(
+        "What should be the min_samples_split? ", (2, 3, 4, 5)
+    )
+
+    ### machine
+    X = data.iloc[:, :-1]
+    y = data.iloc[:, -1]  # Labels
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+    classifier1 = RandomForestClassifier(
+        n_estimators=n_estimators,
+        max_depth=max_depth,
+        min_samples_split=min_samples_split,
+    )
+    classifier1.fit(X_train, y_train)
+    y_pred = classifier1.predict(X_test)
+
+    ### display
+    disp_col.subheader("Mean Absolute Error of the model is: ")
+    disp_col.write(mean_absolute_error(y_test, y_pred))
+
+    disp_col.subheader("Mean Squared Error of the model is: ")
+    disp_col.write(mean_squared_error(y_test, y_pred))
+
+    disp_col.subheader("R Squared Score of the model is: ")
+    disp_col.write(r2_score(y_test, y_pred))
+
+
+# model_import
+with model_import:
+    st.header("Model - Import & Predict")
+    sel_col, disp_col = st.columns(2)
+
+    ### inputs
+    sepal_length = sel_col.number_input(
+        "Sepal Length", value=(data["sepal length"].mean())
+    )
+    sepal_width = sel_col.number_input(
+        "Sepal Width", value=(data["sepal width"].mean())
+    )
+    petal_length = sel_col.number_input(
+        "Petal Length", value=(data["petal length"].mean())
+    )
+    petal_width = sel_col.number_input(
+        "Petal Width", value=(data["petal width"].mean())
+    )
+    result = ""
+
+    ### predictions
+    classifier2 = pickel_load()
+    if disp_col.button("Predict"):
+        result = prediction(sepal_length, sepal_width, petal_length, petal_width)
+    disp_col.success("The output is {}".format(result))
+

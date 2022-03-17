@@ -107,8 +107,6 @@ with st.form(key="add form", clear_on_submit= True):
     for i in range(ncolumns):
         rwdta.append(cols[i].text_input(st.session_state.df.columns[i]))
 
-    # you can insert code for a list comprehension here to change the data (rwdta) 
-    # values into integer / float, if required
 
     if st.form_submit_button("Add"):
         if st.session_state.df.shape[0] == num_new_rows:
