@@ -96,7 +96,7 @@ if "df" not in st.session_state:
 st.subheader("Add Record")
 
 num_new_rows = st.sidebar.number_input("Add Rows",1,50)
-ncolumns = st.session_state.df.shape[1]  # col count
+ncolumns = st.session_state.df.shape[1]  
 
 rw = -1
 
@@ -121,6 +121,48 @@ with st.form(key="add form", clear_on_submit= True):
             if st.session_state.df.shape[0] == num_new_rows:
                 st.error("Add row limit reached...")
 
+button = st.button('Delete Table')
+
+
+
 st.dataframe(st.session_state.df)
+
+if button:
+    for key in st.session_state.keys():
+        del st.session_state[key]
+
+st.write(st.session_state)
+
+
+
+st.header('Session State')
+
+"""
+- Session current app, when a new app is open it is a new session
+- State is what is used to store the current values on the back end
+- Session State allows you to store values from previous sessions
+
+allows the state to link to past  sessions
+
+Think of Run state as a python dictionary that operates in a key value pair.
+
+"""
+st.subheader('accessing keys')
+st.code('for the_key in st.session_state.keys(): \n st.write(the_key)')
+for the_key in st.session_state.keys():
+    st.write(the_key)
+
+st.subheader('accessing values')
+st.code('for the_value in st.session_state.values(): \n st.write(the_value)')
+for the_value in st.session_state.values():
+    st.write(the_value)
+
+st.subheader('accessing pairs')
+st.code('for the_item in st.session_state.items(): \n st.write(the_item)')
+for the_item in st.session_state.items():
+    st.write(the_item)
+
+
+
 
 
