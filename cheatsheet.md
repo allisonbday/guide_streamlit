@@ -1,14 +1,16 @@
+# 1. Download & Open Streamlit
 
+# 2. Basics
 
-# Model ((Copy)
+# 3. Charts
+
+# 4. Models 
+
+## a) model_making
+
+### model
+
 ```python
-    # imports
-    from sklearn.ensemble import RandomForestClassifier
-    from sklearn.model_selection import train_test_split
-    from sklearn.datasets import load_iris
-    from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-
-    # model
     X = data.iloc[:, :-1]
     y = data.iloc[:, -1]  # Labels
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
@@ -17,7 +19,45 @@
     y_pred = classifier1.predict(X_test)
 ```
 
-# CUSTOMIZE(copy)
+## b) model_import
+```python
+def pickel_load():  # load in saved model
+    pickle_in = open("model/classifier.pkl", "rb")
+    classifier = pickle.load(pickle_in)
+    return classifier
+```
+
+```python
+def prediction(sepal_length, sepal_width, petal_length, petal_width):
+    classifier2 = pickel_load()
+    prediction = classifier2.predict(
+        [[sepal_length, sepal_width, petal_length, petal_width]]
+    )
+    print(prediction)
+    return prediction
+```
+
+
+# 5. Wrap it up
+
+### cache & functions
+```python
+def get_data():  # load in the data
+    # the data
+    iris = datasets.load_iris()
+    data = pd.DataFrame(
+        {
+            "sepal length": iris.data[:, 0],
+            "sepal width": iris.data[:, 1],
+            "petal length": iris.data[:, 2],
+            "petal width": iris.data[:, 3],
+            "species": iris.target,
+        }
+    )
+    return data
+```
+
+### customize
 ```python
 st.markdown(
     """
