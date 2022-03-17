@@ -1,0 +1,12 @@
+streamlit
+pandas
+numpy
+
+# Graphing packages
+altair
+matplotlib
+seaborn
+
+# stuff for machine
+sklearn
+pickle
