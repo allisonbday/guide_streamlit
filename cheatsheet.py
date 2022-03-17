@@ -124,3 +124,18 @@ with st.form(key="add form", clear_on_submit= True):
 st.dataframe(st.session_state.df)
 
 
+### ERIK SANDERS ### 
+
+petal = alt.Chart(data=df, title = "Flower Petal Measurements").encode(
+    x = 'petal length (cm)',
+    y = 'petal width (cm)',
+    color = 'Type',
+    tooltip = ['petal length (cm)', 'petal width (cm)']
+).mark_circle().interactive()
+
+sepal = alt.Chart(data=df, title='Flower Sepal Measurements').encode(
+    x = 'sepal length (cm)',
+    y = 'sepal width (cm)',
+    color = 'Type',
+    tooltip = ['sepal length (cm)','sepal width (cm)']
+).mark_circle().interactive()
