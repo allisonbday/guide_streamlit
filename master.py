@@ -298,3 +298,7 @@ with st.form(key="add form", clear_on_submit= True):
                 st.error("Add row limit reached...")
 
 st.dataframe(st.session_state.df)
+
+
+
+st.markdown("[Cheatsheet](https://docs.streamlit.io/library/cheatsheet)", unsafe_allow_html=True)
