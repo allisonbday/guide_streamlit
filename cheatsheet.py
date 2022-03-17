@@ -19,7 +19,7 @@ with st.sidebar:
 
 df = pd.read_csv('data/iris.csv')
 
-st.title('Display Information')
+st.title('CheatSheet')
 
 st.markdown('There are a variety of ways to display information inside of streamlit')
 
