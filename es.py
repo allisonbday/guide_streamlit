@@ -5,7 +5,7 @@ import streamlit as st
 
 df = pd.read_csv("data/iris.csv").drop(columns="Unnamed: 0")
 
-st.table(df.sample(frac=.1).style.highlight_max(axis=0))
+st.table(df.sample(frac=.3).style.highlight_max(axis=0))
 
 petal = alt.Chart(data=df, title = "Flower Petal Measurements").encode(
     x = 'petal length (cm)',
