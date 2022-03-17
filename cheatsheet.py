@@ -5,8 +5,6 @@ import numpy as np
 
 import altair as alt
 
-
-
 # Add a selectbox to the sidebar:
 with st.sidebar:
     st.markdown("[Display Text](http://localhost:8501/#display-text)", unsafe_allow_html=True)
