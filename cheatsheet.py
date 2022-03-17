@@ -81,6 +81,10 @@ st.markdown('1. datarame/table allows for the data to be added or replaced')
 st.markdown('2. datarame/table have various arguements that can be used to customize table')
 
 
+
+
+
+
 if "df" not in st.session_state:
 #st.session_state.df =df
     st.session_state.df = pd.DataFrame(columns=["Sepal Length", 
@@ -118,3 +122,5 @@ with st.form(key="add form", clear_on_submit= True):
                 st.error("Add row limit reached...")
 
 st.dataframe(st.session_state.df)
+
+

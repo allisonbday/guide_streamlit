@@ -71,7 +71,7 @@ st.markdown(
     """
 <style>
 .main {
-    background-color: #81B29A;
+    background-color: #cad2c5;
 }
 </style>
     """,
@@ -91,45 +91,45 @@ with header:
 
 # dataset
 with dataset:
-    st.header("Iris Dataset")
-    data = get_data()
-    st.text("")
-
-    zip_data = pd.read_csv("data/uszips.csv")
-    st.write(zip_data.head(5))
-
-    # density plot (basic)
-    st.subheader("Average zipcode density per State in the US")
-    density_mean = pd.DataFrame(zip_data.groupby("state_name")["density"].mean())
-    st.bar_chart(density_mean)
+    st.write("BLAKE PUT YOUR STUFF UP HERE!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
 # exploration
 with exploration:
-    if st.checkbox('Show Something'):
+
+    data = get_data()
+
+    if st.checkbox("Show Something"):
         st.write("*SOMETHING HERE*")
     st.write("Built in charts")
     st.line_chart(data)
-    st.write("The built in charts are not very customizable. They infer based off of what the dataframe contains.")
+    st.write(
+        "The built in charts are not very customizable. They infer based off of what the dataframe contains."
+    )
 
-    chart = (alt.Chart(data)
-    .encode(
-        alt.X('petal length', axis=alt.Axis(title='Petal Length')), 
-        alt.Y('petal width', axis=alt.Axis(title='Petal Width')), 
-        color = alt.Color('species', title='Species'))
-    .mark_circle()
-    .configure_axis(labelFontSize=18, titleFontSize=18)
-    .configure_title(fontSize=20)
-    .configure_legend(titleFontSize=18, labelFontSize=18))
+    chart = (
+        alt.Chart(data)
+        .encode(
+            alt.X("petal length", axis=alt.Axis(title="Petal Length")),
+            alt.Y("petal width", axis=alt.Axis(title="Petal Width")),
+            color=alt.Color("species", title="Species"),
+        )
+        .mark_circle()
+        .configure_axis(labelFontSize=18, titleFontSize=18)
+        .configure_title(fontSize=20)
+        .configure_legend(titleFontSize=18, labelFontSize=18)
+    )
     st.write("Vega Charts (includes Altair)")
     st.altair_chart(chart)
     st.write("We are given a lot more control when we use other graphing libraries")
 
     fig = plt.figure(figsize=(10, 4))
-    sns.lineplot(x = "sepal length", y = "sepal width", hue = "species", data = data)
+    sns.lineplot(x="sepal length", y="sepal width", hue="species", data=data)
     st.write("Matplotlib (includes seaborn)")
     st.pyplot(fig)
 
-    st.write("There are many more packages you can use, including: deck.gl, plotly, bokeh, pydeck, and graphviz")
+    st.write(
+        "There are many more packages you can use, including: deck.gl, plotly, bokeh, pydeck, and graphviz"
+    )
 
 
 # model_making
@@ -203,95 +203,106 @@ with model_import:
     disp_col.success("The output is {}".format(result))
 
 
-df = pd.read_csv('data/iris.csv')
+df = pd.read_csv("data/iris.csv")
 
-st.title('CheatSheet')
+st.title("CheatSheet")
 
-st.markdown('There are a variety of ways to display information inside of streamlit')
+st.markdown("There are a variety of ways to display information inside of streamlit")
 
-st.header('Display Text')
-
-
-st.code('st.markdown()')
-st.markdown('This is in markdown')
-
-st.code('st.latex()')
-st.latex(r''' \underbrace{\overbrace{\ b_0 \ }^\text{y-intercept} + \overbrace{b_1}^\text{slope} X_i \ }_\text{estimated regression relation}
- ''')
-
-st.code('st.write()')
-st.write('Allows you to display all types of data and information. Streamlit just knows...')
+st.header("Display Text")
 
 
+st.code("st.markdown()")
+st.markdown("This is in markdown")
+
+st.code("st.latex()")
+st.latex(
+    r""" \underbrace{\overbrace{\ b_0 \ }^\text{y-intercept} + \overbrace{b_1}^\text{slope} X_i \ }_\text{estimated regression relation}
+ """
+)
+
+st.code("st.write()")
+st.write(
+    "Allows you to display all types of data and information. Streamlit just knows..."
+)
 
 
+st.header("Display Data")
 
-st.header('Display Data')
+st.markdown("Dataframes")
 
-st.markdown('Dataframes')
-
-st.markdown('Using Magic')
-st.code('df')
+st.markdown("Using Magic")
+st.code("df")
 df
 
 
-st.code('st.dataframe()')
+st.code("st.dataframe()")
 st.dataframe(df)
 
-st.code('st.table()')
+st.code("st.table()")
 
-if st.checkbox('Show table'):
-  
+if st.checkbox("Show table"):
+
     st.table(df)
 
 
-
-st.code('st.write()')
+st.code("st.write()")
 
 
 st.write(df)
 
-st.markdown('Charts')
+st.markdown("Charts")
 
-st.code('st.write()')
-sepal = alt.Chart(data=df, title='Flower Sepal Measurements').encode(
-    x = 'sepal length (cm)',
-    y = 'sepal width (cm)',
-    color = 'Type',
-    tooltip = ['sepal length (cm)','sepal width (cm)']
-).mark_circle().interactive()
+st.code("st.write()")
+sepal = (
+    alt.Chart(data=df, title="Flower Sepal Measurements")
+    .encode(
+        x="sepal length (cm)",
+        y="sepal width (cm)",
+        color="Type",
+        tooltip=["sepal length (cm)", "sepal width (cm)"],
+    )
+    .mark_circle()
+    .interactive()
+)
 st.write(sepal)
 
-st.header('Why choose dataframe/table over Write?')
+st.header("Why choose dataframe/table over Write?")
 
 
-st.markdown('1. dataframe/table allows for the data to be added or replaced')
-st.markdown('2. dataframe/table have various arguments that can be used to customize table')
+st.markdown("1. dataframe/table allows for the data to be added or replaced")
+st.markdown(
+    "2. dataframe/table have various arguments that can be used to customize table"
+)
 
 
 if "df" not in st.session_state:
-#st.session_state.df =df
-    st.session_state.df = pd.DataFrame(columns=["Sepal Length", 
-                                                "Sepal Width", 
-                                                "Petal Length", 
-                                                "Petal Width", 
-                                                "Variety"])
+    # st.session_state.df =df
+    st.session_state.df = pd.DataFrame(
+        columns=[
+            "Sepal Length",
+            "Sepal Width",
+            "Petal Length",
+            "Petal Width",
+            "Variety",
+        ]
+    )
 
 st.subheader("Add Record")
 
-num_new_rows = st.sidebar.number_input("Add Rows",1,50)
+num_new_rows = st.sidebar.number_input("Add Rows", 1, 50)
 ncolumns = st.session_state.df.shape[1]  # col count
 
 rw = -1
 
-with st.form(key="add form", clear_on_submit= True):
+with st.form(key="add form", clear_on_submit=True):
     cols = st.columns(ncolumns)
     rwdta = []
 
     for i in range(ncolumns):
         rwdta.append(cols[i].text_input(st.session_state.df.columns[i]))
 
-    # you can insert code for a list comprehension here to change the data (rwdta) 
+    # you can insert code for a list comprehension here to change the data (rwdta)
     # values into integer / float, if required
 
     if st.form_submit_button("Add"):
@@ -308,5 +319,6 @@ with st.form(key="add form", clear_on_submit= True):
 st.dataframe(st.session_state.df)
 
 
-
-st.markdown("[Cheatsheet](https://docs.streamlit.io/library/cheatsheet)", unsafe_allow_html=True)
+st.markdown(
+    "[Cheatsheet](https://docs.streamlit.io/library/cheatsheet)", unsafe_allow_html=True
+)
