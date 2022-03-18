@@ -1,3 +1,15 @@
+import os
+### NOTE: ############################################
+# If python -V >= 3.9 then you will get:
+# ERROR: Could not find a version that satisfies the requirement pickle (from versions: none)
+# ERROR: No matching distribution found for pickle
+#
+# This is because it is included in Python 3.9 distrubution
+# Uncomment line 11 after first run.
+######################################################
+
+os.system('cmd /k "pip install -r requirements.txt"')
+
 import streamlit as st
 import pandas as pd
 import numpy as np
