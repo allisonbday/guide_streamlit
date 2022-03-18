@@ -1,4 +1,5 @@
 import os
+
 ### NOTE: ############################################
 # If python -V >= 3.9 then you will get:
 # ERROR: Could not find a version that satisfies the requirement pickle (from versions: none)
@@ -8,7 +9,7 @@ import os
 # Uncomment line 11 after first run.
 ######################################################
 
-os.system('cmd /k "pip install -r requirements.txt"')
+# os.system('cmd /k "pip install -r requirements.txt"')
 
 import streamlit as st
 import pandas as pd

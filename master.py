@@ -297,7 +297,6 @@ with model_making:
     n_estimators = sel_col.selectbox(
         "How many trees should there be?", options=[100, 200, 300], index=1
     )
-
     min_samples_split = sel_col.radio(
         "What should be the min_samples_split? ", (2, 3, 4, 5)
     )
