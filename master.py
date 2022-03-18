@@ -218,9 +218,9 @@ with dataset:
     """
     - Session current app, when a new app is open it is a new session
     - State is what is used to store the current values on the back end
-    - Session State allows you to store values from previous sessions
+    - Session State is how the session and state communicate to one another, so you can store previous run throughs of the app
 
-    allows the state to link to past  sessions
+    
 
     Think of Run state as a python dictionary that operates in a key value pair.
 
