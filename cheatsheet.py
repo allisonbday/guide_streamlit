@@ -1,5 +1,7 @@
+# Pull data
 df = pd.read_csv("data/iris.csv")
 
+# Charts
 petal = alt.Chart(data=df, title = "Flower Petal Measurements").encode(
     x = 'petal length (cm)',
     y = 'petal width (cm)',
