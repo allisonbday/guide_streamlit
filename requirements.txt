@@ -9,4 +9,3 @@ seaborn
 
 # stuff for machine
 sklearn
-pickle

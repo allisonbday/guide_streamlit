@@ -1,6 +1,6 @@
 import os
 
-# os.system('cmd /k "pip install -r requirements.txt"')
+os.system('cmd /k "pip install -r requirements.txt"')
 
 import streamlit as st
 import pandas as pd
