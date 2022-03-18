@@ -33,9 +33,7 @@ X = data.iloc[:, :-1]
     y = data.iloc[:, -1]  # Labels
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
     classifier1 = RandomForestClassifier(
-        n_estimators=n_estimators,
-        max_depth=max_depth,
-        min_samples_split=min_samples_split,
+        # hyperperameters here
     )
     classifier1.fit(X_train, y_train)
     y_pred = classifier1.predict(X_test)
