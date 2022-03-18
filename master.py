@@ -1,4 +1,5 @@
 import os
+
 # os.system('cmd /k "pip install -r requirements.txt"')
 
 import streamlit as st
@@ -90,10 +91,11 @@ with dataset:
 
     st.title("CheatSheet")
 
-    st.markdown("There are a variety of ways to display information inside of streamlit")
+    st.markdown(
+        "There are a variety of ways to display information inside of streamlit"
+    )
 
     st.header("Display Text")
-
 
     st.code("st.markdown()")
     st.markdown("This is in markdown")
@@ -109,7 +111,6 @@ with dataset:
         "Allows you to display all types of data and information. Streamlit just knows..."
     )
 
-
     st.header("Display Data")
 
     st.markdown("Dataframes")
@@ -117,7 +118,6 @@ with dataset:
     st.markdown("Using Magic")
     st.code("df")
     df
-
 
     st.code("st.dataframe()")
     st.dataframe(df)
@@ -128,9 +128,7 @@ with dataset:
 
         st.table(df)
 
-
     st.code("st.write()")
-
 
     st.write(df)
 
@@ -152,12 +150,10 @@ with dataset:
 
     st.header("Why choose dataframe/table over Write?")
 
-
     st.markdown("1. dataframe/table allows for the data to be added or replaced")
     st.markdown(
         "2. dataframe/table have various arguments that can be used to customize table"
     )
-
 
     if "df" not in st.session_state:
         # st.session_state.df =df
@@ -198,22 +194,22 @@ with dataset:
 
                 if st.session_state.df.shape[0] == num_new_rows:
                     st.error("Add row limit reached...")
-    button = st.button('Delete Table')
-
+    button = st.button("Delete Table")
 
     st.dataframe(st.session_state.df)
 
-    st.code('element = st.dataframe(st.session_state.df) \nelement.add_rows(st.session_state.df)')
+    st.code(
+        "element = st.dataframe(st.session_state.df) \nelement.add_rows(st.session_state.df)"
+    )
 
     element = st.dataframe(st.session_state.df)
     element.add_rows(st.session_state.df)
-   
 
     if button:
-       for key in st.session_state.keys():
-           del st.session_state[key]
+        for key in st.session_state.keys():
+            del st.session_state[key]
 
-    st.header('Session State')
+    st.header("Session State")
 
     """
     - Session current app, when a new app is open it is a new session
@@ -225,31 +221,25 @@ with dataset:
     Think of Run state as a python dictionary that operates in a key value pair.
 
     """
-    st.subheader('accessing keys')
-    st.code('for the_key in st.session_state.keys(): \n st.write(the_key)')
+    st.subheader("accessing keys")
+    st.code("for the_key in st.session_state.keys(): \n st.write(the_key)")
     for the_key in st.session_state.keys():
         st.write(the_key)
 
-    st.subheader('accessing values')
-    st.code('for the_value in st.session_state.values(): \n st.write(the_value)')
+    st.subheader("accessing values")
+    st.code("for the_value in st.session_state.values(): \n st.write(the_value)")
     for the_value in st.session_state.values():
         st.write(the_value)
 
-    st.subheader('accessing pairs')
-    st.code('for the_item in st.session_state.items(): \n st.write(the_item)')
+    st.subheader("accessing pairs")
+    st.code("for the_item in st.session_state.items(): \n st.write(the_item)")
     for the_item in st.session_state.items():
         st.write(the_item)
 
-
-
-
-
-
-
     st.markdown(
-        "[Cheatsheet](https://docs.streamlit.io/library/cheatsheet)", unsafe_allow_html=True
+        "[Cheatsheet](https://docs.streamlit.io/library/cheatsheet)",
+        unsafe_allow_html=True,
     )
-    
 
 
 # exploration
@@ -359,5 +349,5 @@ with model_import:
     classifier2 = pickel_load()
     if disp_col.button("Predict"):
         result = prediction(sepal_length, sepal_width, petal_length, petal_width)
+        st.balloons()
     disp_col.success("The output is {}".format(result))
-

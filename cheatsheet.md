@@ -74,3 +74,7 @@ st.markdown(
 )
 ```
 
+```python
+st.balloons()
+```
+
