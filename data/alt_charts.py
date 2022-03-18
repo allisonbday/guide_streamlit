@@ -3,7 +3,7 @@ import numpy as np
 import altair as alt
 import streamlit as st
 
-df = pd.read_csv("data/iris.csv").drop(columns="Unnamed: 0")
+df = pd.read_csv("data/iris.csv")
 
 st.table(df.sample(frac=.3).style.highlight_max(axis=0))
 

@@ -1,7 +1,4 @@
-
-
-<<<<<<< HEAD
-### ERIK SANDERS ### 
+df = pd.read_csv("data/iris.csv")
 
 petal = alt.Chart(data=df, title = "Flower Petal Measurements").encode(
     x = 'petal length (cm)',
@@ -16,7 +13,8 @@ sepal = alt.Chart(data=df, title='Flower Sepal Measurements').encode(
     color = 'Type',
     tooltip = ['sepal length (cm)','sepal width (cm)']
 ).mark_circle().interactive()
-=======
+
+
 # Data:
 data = get_data()
 
@@ -37,4 +35,3 @@ chart = (
 # Chart 2:
 fig = plt.figure(figsize=(10, 4))
 sns.lineplot(x="sepal length", y="sepal width", hue="species", data=data)
->>>>>>> ca7d487cfeeab7e55f8aaf81bfefab2ac97c0036
