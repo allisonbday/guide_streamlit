@@ -1,5 +1,5 @@
 import os
-#os.system('cmd /k "pip install -r requirements.txt"')
+#!pip install -r requirements.txt
 
 
 import streamlit as st
@@ -87,7 +87,171 @@ with header:
 
 # dataset
 with dataset:
-    st.write("BLAKE PUT YOUR STUFF UP HERE!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    df = pd.read_csv("data/iris.csv")
+
+    st.title("CheatSheet")
+
+    st.markdown("There are a variety of ways to display information inside of streamlit")
+
+    st.header("Display Text")
+
+
+    st.code("st.markdown()")
+    st.markdown("This is in markdown")
+
+    st.code("st.latex()")
+    st.latex(
+        r""" \underbrace{\overbrace{\ b_0 \ }^\text{y-intercept} + \overbrace{b_1}^\text{slope} X_i \ }_\text{estimated regression relation}
+    """
+    )
+
+    st.code("st.write()")
+    st.write(
+        "Allows you to display all types of data and information. Streamlit just knows..."
+    )
+
+
+    st.header("Display Data")
+
+    st.markdown("Dataframes")
+
+    st.markdown("Using Magic")
+    st.code("df")
+    df
+
+
+    st.code("st.dataframe()")
+    st.dataframe(df)
+
+    st.code("st.table()")
+
+    if st.checkbox("Show table"):
+
+        st.table(df)
+
+
+    st.code("st.write()")
+
+
+    st.write(df)
+
+    st.markdown("Charts")
+
+    st.code("st.write()")
+    sepal = (
+        alt.Chart(data=df, title="Flower Sepal Measurements")
+        .encode(
+            x="sepal length (cm)",
+            y="sepal width (cm)",
+            color="Type",
+            tooltip=["sepal length (cm)", "sepal width (cm)"],
+        )
+        .mark_circle()
+        .interactive()
+    )
+    st.write(sepal)
+
+    st.header("Why choose dataframe/table over Write?")
+
+
+    st.markdown("1. dataframe/table allows for the data to be added or replaced")
+    st.markdown(
+        "2. dataframe/table have various arguments that can be used to customize table"
+    )
+
+
+    if "df" not in st.session_state:
+        # st.session_state.df =df
+        st.session_state.df = pd.DataFrame(
+            columns=[
+                "Sepal Length",
+                "Sepal Width",
+                "Petal Length",
+                "Petal Width",
+                "Variety",
+            ]
+        )
+
+    st.subheader("Add Record")
+
+    num_new_rows = st.sidebar.number_input("Add Rows", 1, 50)
+    ncolumns = st.session_state.df.shape[1]  # col count
+
+    rw = -1
+
+    with st.form(key="add form", clear_on_submit=True):
+        cols = st.columns(ncolumns)
+        rwdta = []
+
+        for i in range(ncolumns):
+            rwdta.append(cols[i].text_input(st.session_state.df.columns[i]))
+
+        # you can insert code for a list comprehension here to change the data (rwdta)
+        # values into integer / float, if required
+
+        if st.form_submit_button("Add"):
+            if st.session_state.df.shape[0] == num_new_rows:
+                st.error("Add row limit reached. Cant add any more records..")
+            else:
+                rw = st.session_state.df.shape[0] + 1
+                st.info(f"Row: {rw} / {num_new_rows} added")
+                st.session_state.df.loc[rw] = rwdta
+
+                if st.session_state.df.shape[0] == num_new_rows:
+                    st.error("Add row limit reached...")
+    button = st.button('Delete Table')
+
+
+    st.dataframe(st.session_state.df)
+
+    st.code('element = st.dataframe(st.session_state.df) \nelement.add_rows(st.session_state.df)')
+
+    element = st.dataframe(st.session_state.df)
+    element.add_rows(st.session_state.df)
+   
+
+    if button:
+       for key in st.session_state.keys():
+           del st.session_state[key]
+
+    st.header('Session State')
+
+    """
+    - Session current app, when a new app is open it is a new session
+    - State is what is used to store the current values on the back end
+    - Session State allows you to store values from previous sessions
+
+    allows the state to link to past  sessions
+
+    Think of Run state as a python dictionary that operates in a key value pair.
+
+    """
+    st.subheader('accessing keys')
+    st.code('for the_key in st.session_state.keys(): \n st.write(the_key)')
+    for the_key in st.session_state.keys():
+        st.write(the_key)
+
+    st.subheader('accessing values')
+    st.code('for the_value in st.session_state.values(): \n st.write(the_value)')
+    for the_value in st.session_state.values():
+        st.write(the_value)
+
+    st.subheader('accessing pairs')
+    st.code('for the_item in st.session_state.items(): \n st.write(the_item)')
+    for the_item in st.session_state.items():
+        st.write(the_item)
+
+
+
+
+
+
+
+    st.markdown(
+        "[Cheatsheet](https://docs.streamlit.io/library/cheatsheet)", unsafe_allow_html=True
+    )
+    
+
 
 # exploration
 with exploration:
@@ -198,123 +362,3 @@ with model_import:
         result = prediction(sepal_length, sepal_width, petal_length, petal_width)
     disp_col.success("The output is {}".format(result))
 
-
-df = pd.read_csv("data/iris.csv")
-
-st.title("CheatSheet")
-
-st.markdown("There are a variety of ways to display information inside of streamlit")
-
-st.header("Display Text")
-
-
-st.code("st.markdown()")
-st.markdown("This is in markdown")
-
-st.code("st.latex()")
-st.latex(
-    r""" \underbrace{\overbrace{\ b_0 \ }^\text{y-intercept} + \overbrace{b_1}^\text{slope} X_i \ }_\text{estimated regression relation}
- """
-)
-
-st.code("st.write()")
-st.write(
-    "Allows you to display all types of data and information. Streamlit just knows..."
-)
-
-
-st.header("Display Data")
-
-st.markdown("Dataframes")
-
-st.markdown("Using Magic")
-st.code("df")
-df
-
-
-st.code("st.dataframe()")
-st.dataframe(df)
-
-st.code("st.table()")
-
-if st.checkbox("Show table"):
-
-    st.table(df)
-
-
-st.code("st.write()")
-
-
-st.write(df)
-
-st.markdown("Charts")
-
-st.code("st.write()")
-sepal = (
-    alt.Chart(data=df, title="Flower Sepal Measurements")
-    .encode(
-        x="sepal length (cm)",
-        y="sepal width (cm)",
-        color="Type",
-        tooltip=["sepal length (cm)", "sepal width (cm)"],
-    )
-    .mark_circle()
-    .interactive()
-)
-st.write(sepal)
-
-st.header("Why choose dataframe/table over Write?")
-
-
-st.markdown("1. dataframe/table allows for the data to be added or replaced")
-st.markdown(
-    "2. dataframe/table have various arguments that can be used to customize table"
-)
-
-
-if "df" not in st.session_state:
-    # st.session_state.df =df
-    st.session_state.df = pd.DataFrame(
-        columns=[
-            "Sepal Length",
-            "Sepal Width",
-            "Petal Length",
-            "Petal Width",
-            "Variety",
-        ]
-    )
-
-st.subheader("Add Record")
-
-num_new_rows = st.sidebar.number_input("Add Rows", 1, 50)
-ncolumns = st.session_state.df.shape[1]  # col count
-
-rw = -1
-
-with st.form(key="add form", clear_on_submit=True):
-    cols = st.columns(ncolumns)
-    rwdta = []
-
-    for i in range(ncolumns):
-        rwdta.append(cols[i].text_input(st.session_state.df.columns[i]))
-
-    # you can insert code for a list comprehension here to change the data (rwdta)
-    # values into integer / float, if required
-
-    if st.form_submit_button("Add"):
-        if st.session_state.df.shape[0] == num_new_rows:
-            st.error("Add row limit reached. Cant add any more records..")
-        else:
-            rw = st.session_state.df.shape[0] + 1
-            st.info(f"Row: {rw} / {num_new_rows} added")
-            st.session_state.df.loc[rw] = rwdta
-
-            if st.session_state.df.shape[0] == num_new_rows:
-                st.error("Add row limit reached...")
-
-st.dataframe(st.session_state.df)
-
-
-st.markdown(
-    "[Cheatsheet](https://docs.streamlit.io/library/cheatsheet)", unsafe_allow_html=True
-)
